@@ -1,20 +1,22 @@
 /**
  * Java level 1
- * Home work for lesson 1
+ * Homework for lesson 1
  *
  * @author Bogdanov Anton
  * @version dated May 1, 2018
  */
 public class Lesson1 {
-
+    // Task 1.
     public static void main(String[] args) {
+
+        // Task 2.
         byte b = 8;
         short s = 16;
         int i = 32;
         long l = 64;
         float f = 32.0f;
         double d = 64.0;
-        boolean isB = true;
+        boolean isBool = true;
         char c = 'Ы';
 
         System.out.println(calculateTask3(8, 6, 4, 2));
@@ -39,14 +41,17 @@ public class Lesson1 {
         isLeapYear(500);
     }
 
+    // Task 3.
     private static int calculateTask3(int a, int b, int c, int d) {
         return (a * (b + (c / d)));
     }
 
+    // Task 4.
     private static boolean isSumInRange10To20(int a, int b) {
         return ((a + b) >= 10 && (a + b) <= 20);
     }
 
+    // Task 5.
     private static void printPosOrNeg(int i) {
         if (i >= 0)
             System.out.println("Число положительное");
@@ -54,14 +59,17 @@ public class Lesson1 {
             System.out.println("Число отрицательное");
     }
 
+    // Task 6.
     private static boolean isNegative(int i) {
         return i < 0;
     }
 
+    // Task 7.
     private static void printHello(String name) {
         System.out.println("Привет, " + name + "!");
     }
 
+    // Task 8.
     private static void isLeapYear(int year) {
         if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
             System.out.println(year + ": Да, этот год високосный!");
