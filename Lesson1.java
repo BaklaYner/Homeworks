@@ -3,7 +3,7 @@
  * Homework for lesson 1
  *
  * @author Bogdanov Anton
- * @version dated May 1, 2018
+ * @version dated May 7, 2018
  */
 public class Lesson1 {
     // Task 1.
@@ -18,6 +18,7 @@ public class Lesson1 {
         double d = 64.0;
         boolean isBool = true;
         char c = 'Ы';
+        String word = "String";
 
         System.out.println(calculateTask3(8, 6, 4, 2));
 
