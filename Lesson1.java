@@ -43,7 +43,7 @@ public class Lesson1 {
     }
 
     // Task 3.
-    private static int calculateTask3(int a, int b, int c, int d) {
+    private static double calculateTask3(int a, int b, int c, int d) {
         return (a * (b + (c / d)));
     }
 
