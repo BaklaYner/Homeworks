@@ -34,12 +34,12 @@ public class Lesson1 {
 
         printHello("Антон");
 
-        isLeapYear(4);
-        isLeapYear(8);
-        isLeapYear(100);
-        isLeapYear(140);
-        isLeapYear(400);
-        isLeapYear(500);
+        isYearLeap(4);
+        isYearLeap(8);
+        isYearLeap(100);
+        isYearLeap(140);
+        isYearLeap(400);
+        isYearLeap(500);
     }
 
     // Task 3.
@@ -71,7 +71,7 @@ public class Lesson1 {
     }
 
     // Task 8.
-    private static void isLeapYear(int year) {
+    private static void isYearLeap(int year) {
         if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
             System.out.println(year + ": Да, этот год високосный!");
         else
