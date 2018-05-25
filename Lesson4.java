@@ -6,9 +6,8 @@ import java.util.Scanner;
  * Homework for lesson 4.
  *
  * @author Bogdanov Anton
- * @version dated May 20, 2018
+ * @version dated May 22, 2018
  */
-
 
 public class Lesson4 {
     private static Scanner scan;
@@ -101,62 +100,93 @@ public class Lesson4 {
         map[y][x] = DOT_X;
     }
 
-    // Task 4 partially. Block horizontal and vertical threats, but not block diagonal.
+    // Task 4.
     private void aiTurn() {
         Random rnd = new Random();
-        int x, y, cntRow, cntCol;
+        int x, y, cntHor, cntVer;
+
+        // Finding the winning turn. Highest priority!
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == DOT_EMPTY) {
+                    map[i][j] = DOT_O;
+                    if (checkWin(DOT_O)) {
+                        return;
+                    } else {
+                        map[i][j] = DOT_EMPTY;
+                    }
+                }
+            }
+        }
+
+        // Finding the winning turn for the enemy and brake it. High priority!
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == DOT_EMPTY) {
+                    map[i][j] = DOT_X;
+                    if (checkWin(DOT_X)) {
+                        map[i][j] = DOT_O;
+                        return;
+                    } else {
+                        map[i][j] = DOT_EMPTY;
+                    }
+                }
+            }
+        }
 
         // Check rows and columns for at least 2 "X" from index "0" to "SIZE - 2" inclusive.
         for (int i = 0; (i + 1) < SIZE; i++) {
-            cntRow = cntCol = 0;
+            cntHor = cntVer = 0;
             for (int j = 0; (j + 1) < SIZE; j++) {
                 if (map[i][j] == DOT_X) {
-                    cntRow++;
-                    if ((cntRow >= 2) && (map[i][j + 1] == DOT_EMPTY)) {
+                    cntHor++;
+                    if ((cntHor >= 2) && (map[i][j + 1] == DOT_EMPTY)) {
                         map[i][j + 1] = DOT_O;
                         return;
                     }
                 } else {
-                    cntRow = 0;
+                    cntHor = 0;
                 }
 
                 if (map[j][i] == DOT_X) {
-                    cntCol++;
-                    if ((cntCol >= 2) && (map[j + 1][i] == DOT_EMPTY)) {
+                    cntVer++;
+                    if ((cntVer >= 2) && (map[j + 1][i] == DOT_EMPTY)) {
                         map[j + 1][i] = DOT_O;
                         return;
                     }
                 } else {
-                    cntCol = 0;
+                    cntVer = 0;
                 }
             }
         }
 
         // Check rows and columns for at least 2 "X" from index "SIZE - 1" to "1" inclusive.
         for (int i = SIZE - 1; i > 0; i--) {
-            cntRow = cntCol = 0;
+            cntHor = cntVer = 0;
             for (int j = SIZE - 1; j > 0; j--) {
                 if (map[i][j] == DOT_X) {
-                    cntRow++;
-                    if ((cntRow >= 2) && (map[i][j - 1] == DOT_EMPTY)) {
+                    cntHor++;
+                    if ((cntHor >= 2) && (map[i][j - 1] == DOT_EMPTY)) {
                         map[i][j - 1] = DOT_O;
                         return;
                     }
                 } else {
-                    cntRow = 0;
+                    cntHor = 0;
                 }
 
                 if (map[j][i] == DOT_X) {
-                    cntCol++;
-                    if ((cntCol >= 2) && (map[j - 1][i] == DOT_EMPTY)) {
+                    cntVer++;
+                    if ((cntVer >= 2) && (map[j - 1][i] == DOT_EMPTY)) {
                         map[j - 1][i] = DOT_O;
                         return;
                     }
                 } else {
-                    cntCol = 0;
+                    cntVer = 0;
                 }
             }
         }
+
+        // Check diagonals
 
         do {
             x = rnd.nextInt(SIZE);
@@ -171,64 +201,67 @@ public class Lesson4 {
 
     // Task 2 & 3 implemented for ALL values of SIZE and DOTS_TO_WIN variables.
     private boolean checkWin(char dot) {
-        int hor, ver, diaTop, diaBot;
+        int cntHor, cntVer, cntDiaTop, cntDiaBot;
 
         // Check horizontal and vertical lines.
         for (int i = 0; i < SIZE; i++) {
-            hor = ver = 0;
+            cntHor = cntVer = 0;
             for (int j = 0; j < SIZE; j++) {
                 if (map[i][j] == dot) {
-                    hor++;
-                    if (hor == DOTS_TO_WIN) return true;
+                    cntHor++;
+                    if (cntHor == DOTS_TO_WIN) return true;
                 } else {
-                    hor = 0;
+                    cntHor = 0;
                 }
 
                 if (map[j][i] == dot) {
-                    ver++;
-                    if (ver == DOTS_TO_WIN) return true;
+                    cntVer++;
+                    if (cntVer == DOTS_TO_WIN) return true;
                 } else {
-                    ver = 0;
+                    cntVer = 0;
                 }
             }
         }
 
         // Check diagonal lines.
         for (int offset = 0; offset <= (SIZE - DOTS_TO_WIN); offset++) {
-            diaTop = diaBot = 0;
+
+            cntDiaTop = cntDiaBot = 0;
             // Check diagonals from top left to bottom right.
             for (int i = 0; i < (SIZE - offset); i++) {
                 if (map[i][i + offset] == dot) {
-                    diaTop++;
-                    if (diaTop == DOTS_TO_WIN) return true;
+                    cntDiaTop++;
+                    if (cntDiaTop == DOTS_TO_WIN) return true;
                 } else {
-                    diaTop = 0;
+                    cntDiaTop = 0;
                 }
 
                 if (map[i + offset][i] == dot) {
-                    diaBot++;
-                    if (diaBot == DOTS_TO_WIN) return true;
+                    cntDiaBot++;
+                    if (cntDiaBot == DOTS_TO_WIN) return true;
                 } else {
-                    diaBot = 0;
+                    cntDiaBot = 0;
                 }
             }
 
+            cntDiaTop = cntDiaBot = 0;
             // Check diagonals from top right to bottom left.
             for (int i = 0; i < (SIZE - offset); i++) {
                 if (map[i][SIZE - 1 - i - offset] == dot) {
-                    diaTop++;
-                    if (diaTop == DOTS_TO_WIN) return true;
+                    cntDiaTop++;
+                    if (cntDiaTop == DOTS_TO_WIN) return true;
                 } else {
-                    diaTop = 0;
+                    cntDiaTop = 0;
                 }
 
                 if (map[i + offset][SIZE - 1 - i] == dot) {
-                    diaBot++;
-                    if (diaBot == DOTS_TO_WIN) return true;
+                    cntDiaBot++;
+                    if (cntDiaBot == DOTS_TO_WIN) return true;
                 } else {
-                    diaBot = 0;
+                    cntDiaBot = 0;
                 }
             }
+
         }
 
         return false;
